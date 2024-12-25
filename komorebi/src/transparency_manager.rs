@@ -104,25 +104,25 @@ pub fn handle_notifications(wm: Arc<Mutex<WindowManager>>) -> color_eyre::Result
                 }
 
                 // Monocle container is never transparent
-                if let Some(monocle) = ws.monocle_container() {
-                    if let Some(window) = monocle.focused_window() {
-                        if monitor_idx == focused_monitor_idx {
-                            if let Err(error) = window.opaque() {
-                                let hwnd = window.hwnd;
-                                tracing::error!(
-                                    "failed to make monocle window {hwnd} opaque: {error}"
-                                )
-                            }
-                        } else if let Err(error) = window.transparent() {
-                            let hwnd = window.hwnd;
-                            tracing::error!(
-                                "failed to make monocle window {hwnd} transparent: {error}"
-                            )
-                        }
-                    }
-
-                    continue 'monitors;
-                }
+                //if let Some(monocle) = ws.monocle_container() {
+                //    if let Some(window) = monocle.focused_window() {
+                //        if monitor_idx == focused_monitor_idx {
+                //            if let Err(error) = window.opaque() {
+                //                let hwnd = window.hwnd;
+                //                tracing::error!(
+                //                    "failed to make monocle window {hwnd} opaque: {error}"
+                //                )
+                //            }
+                //        } else if let Err(error) = window.transparent() {
+                //            let hwnd = window.hwnd;
+                //            tracing::error!(
+                //                "failed to make monocle window {hwnd} transparent: {error}"
+                //            )
+                //        }
+                //    }
+                //
+                //    continue 'monitors;
+                //}
 
                 let foreground_hwnd = WindowsApi::foreground_window().unwrap_or_default();
                 let is_maximized = WindowsApi::is_zoomed(foreground_hwnd);
@@ -145,7 +145,8 @@ pub fn handle_notifications(wm: Arc<Mutex<WindowManager>>) -> color_eyre::Result
                     // If the window is not focused on the current workspace, or isn't on the focused monitor
                     // make it transparent
                     #[allow(clippy::collapsible_else_if)]
-                    if idx != ws.focused_container_idx() || monitor_idx != focused_monitor_idx {
+                    //if idx != ws.focused_container_idx() || monitor_idx != focused_monitor_idx {
+                    if true {
                         let focused_window_idx = c.focused_window_idx();
                         for (window_idx, window) in c.windows().iter().enumerate() {
                             if window_idx == focused_window_idx {
